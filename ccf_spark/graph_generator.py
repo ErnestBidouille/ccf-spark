@@ -18,7 +18,7 @@ class GraphGenerator:
             filter_node=lambda node: nx.degree(copy, node) != 0,
         )
 
-    def save(self, path):
+    def save(self, path: str):
         with open(path, 'wb') as f:
             nx.write_edgelist(self.graph, f)
 
@@ -26,7 +26,7 @@ class GraphGenerator:
         nx.draw(self.graph, with_labels=True)
 
     @staticmethod
-    def generate_random_graph(nodes, edges):
+    def generate_random_graph(nodes: int, edges: int):
         graph = GraphGenerator(nodes, edges)
         graph.remove_null_degres_nodes()
         return graph
