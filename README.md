@@ -1,4 +1,4 @@
-# CcfSpark version 0.2
+# CcfSpark version 0.2.1
 
 A little CCF implementation in a Spark context with networkx.
 
