@@ -16,7 +16,6 @@ class Ccf:
                 if value < min_value:
                     min_value = value
                 value_list.append(value)
-            print(value_list)
             if (min_value < key):
                 to_return.append((key, min_value))
                 for value in value_list:
