@@ -18,7 +18,7 @@ class CcfSpark:
         self.iterator = CCF_ITERATE_SECONDARY_SORTING if secondary_sorting else CCF_ITERATE
         self.secondary_sorting = secondary_sorting
         if graph:
-            self.graph = sc.parallelize(self.graph.edges)
+            self.graph = sc.parallelize(graph.edges)
         elif file_path:
             # File line format expected : <int> <int>
             self.graph = sc.textFile(file_path).map(

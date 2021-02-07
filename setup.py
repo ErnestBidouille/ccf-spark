@@ -1,18 +1,19 @@
 from distutils.core import setup
 from os import path
 
-dir = path.abspath(path.dirname(__file__))
-with open(path.join(dir, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
+# dir = path.abspath(path.dirname(__file__))
+# with open(path.join(dir, 'README.md'), encoding='utf-8') as f:
+#     long_description = f.read()
 
 setup(
-    name='CcfSpark',
-    version='1.0',
+    name='ccf_spark',
+    version='0.1.2',
     description='A little CCF implementation in a Spark context with networkx',
-    long_description=long_description,
-    author=['Théo Chennebault', 'Louis Ledoux'],
+    # long_description=long_description,
+    # long_description_content_type=text/markdown,
+    author='Théo Chennebault',
     author_email='theo.chennebault@le-cab-politique.fr',
-    url='https://www.python.org/sigs/distutils-sig/',
+    url='https://github.com/ErnestBidouille/ccf-spark',
     packages=[
         'ccf_spark',
     ],
