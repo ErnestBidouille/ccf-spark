@@ -23,7 +23,7 @@ class CcfSpark:
             # File line format expected : <int> <int>
             self.graph = sc.textFile(file_path).map(
                 lambda x: tuple(map(int,
-                                    x.split('  ')[:2])))
+                                    x.split(' ')[:2])))
         else:
             self.graph = sc.parallelize(
                 GraphGenerator.generate_random_graph(500, 350).edges)

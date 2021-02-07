@@ -10,20 +10,18 @@ class Ccf:
         @staticmethod
         def _reduce(key, values, accumulator: Accumulator = None):
             value_list = []
-            to_return = []
             min_value = key
             for value in values:
                 if value < min_value:
                     min_value = value
                 value_list.append(value)
             if (min_value < key):
-                to_return.append((key, min_value))
+                yield (key, min_value)
                 for value in value_list:
                     if min_value != value:
-                        to_return.append((value, min_value))
+                        yield (value, min_value)
                         if accumulator:
                             accumulator.add(1)
-            return to_return
 
         @staticmethod
         def map(x):
@@ -37,14 +35,12 @@ class Ccf:
         @staticmethod
         def _reduce(key, values, accumulator: Accumulator = None):
             min_value = values[0]
-            to_return = []
             if min_value < key:
-                to_return.append((key, min_value))
+                yield((key, min_value))
                 for value in values[1:]:
-                    to_return.append((value, min_value))
+                    yield((value, min_value))
                     if accumulator:
                         accumulator.add(1)
-            return to_return
 
         @staticmethod
         def reduce(x, accumulator: Accumulator = None):
