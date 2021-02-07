@@ -1,5 +1,7 @@
 from pyspark.accumulators import Accumulator
 
+LEN_ERROR = ValueError('x len should be equal to 2')
+
 
 class Ccf:
     class Iterate:
@@ -25,11 +27,15 @@ class Ccf:
 
         @staticmethod
         def map(x):
-            return __class__._map(x[0], x[1])
+            if len(x) != 2:
+                raise LEN_ERROR
+            return __class__._map(*x)
 
         @staticmethod
         def reduce(x, accumulator: Accumulator = None):
-            yield from __class__._reduce(x[0], x[1], accumulator)
+            if len(x) != 2:
+                raise LEN_ERROR
+            yield from __class__._reduce(*x, accumulator)
 
     class IterateSecondarySorting(Iterate):
         @staticmethod
@@ -44,7 +50,9 @@ class Ccf:
 
         @staticmethod
         def reduce(x, accumulator: Accumulator = None):
-            yield from __class__._reduce(x[0], x[1], accumulator)
+            if len(x) != 2:
+                raise LEN_ERROR
+            yield from __class__._reduce(*x, accumulator)
 
     class Dedup:
         @staticmethod
@@ -57,10 +65,12 @@ class Ccf:
 
         @staticmethod
         def map(x):
-            return __class__._map(x[0], x[1])
+            if len(x) != 2:
+                raise LEN_ERROR
+            return __class__._map(*x)
 
         @staticmethod
         def reduce(x):
-            return __class__._reduce(x[0], x[1])
-
-
+            if len(x) != 2:
+                raise LEN_ERROR
+            return __class__._reduce(*x)
