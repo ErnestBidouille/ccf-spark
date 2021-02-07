@@ -29,22 +29,22 @@ class Ccf:
 
         @staticmethod
         def reduce(x, accumulator: Accumulator = None):
-            return __class__._reduce(x[0], x[1], accumulator)
+            yield from __class__._reduce(x[0], x[1], accumulator)
 
     class IterateSecondarySorting(Iterate):
         @staticmethod
         def _reduce(key, values, accumulator: Accumulator = None):
             min_value = values[0]
             if min_value < key:
-                yield((key, min_value))
+                yield (key, min_value)
                 for value in values[1:]:
-                    yield((value, min_value))
+                    yield (value, min_value)
                     if accumulator:
                         accumulator.add(1)
 
         @staticmethod
         def reduce(x, accumulator: Accumulator = None):
-            return __class__._reduce(x[0], x[1], accumulator)
+            yield from __class__._reduce(x[0], x[1], accumulator)
 
     class Dedup:
         @staticmethod
@@ -62,3 +62,5 @@ class Ccf:
         @staticmethod
         def reduce(x):
             return __class__._reduce(x[0], x[1])
+
+
