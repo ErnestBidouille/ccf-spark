@@ -1,0 +1,2 @@
+networkx==2.5
+pyspark==3.0.1
