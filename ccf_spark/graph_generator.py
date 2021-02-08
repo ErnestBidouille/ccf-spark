@@ -15,7 +15,7 @@ class GraphGenerator:
         copy = self.graph.copy()
         self.graph = nx.subgraph_view(
             copy,
-            filter_node=lambda node: nx.degree(copy, node) != 0,
+            filter_node=lambda node: bool(nx.degree(copy, node)),
         )
 
     def save(self, path: str):
