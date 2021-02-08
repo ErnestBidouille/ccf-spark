@@ -26,7 +26,7 @@ class GraphGenerator:
         nx.draw(self.graph, with_labels=True)
 
     @staticmethod
-    def generate_random_graph(nodes: int, edges: int):
+    def generate_ccf_random_graph(nodes: int, edges: int):
         graph = GraphGenerator(nodes, edges)
         graph.remove_null_degres_nodes()
         return graph
