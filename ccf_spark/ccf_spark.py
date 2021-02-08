@@ -26,7 +26,7 @@ class CcfSpark:
                                     x.split(' ')[:2])))
         else:
             self.graph = sc.parallelize(
-                GraphGenerator.generate_random_graph(500, 350).edges)
+                GraphGenerator.generate_ccf_random_graph(500, 350).edges)
 
     def iterate(self):
         accumulator = self.sc.accumulator(0)
@@ -49,5 +49,3 @@ class CcfSpark:
 
     def print(self):
         return self.graph.collect()
-
-

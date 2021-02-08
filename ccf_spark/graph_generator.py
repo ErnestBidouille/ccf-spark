@@ -34,7 +34,7 @@ class GraphGenerator:
     @property
     def number_connected_components(self):
         return nx.number_connected_components(self.graph)
-        
+
     @property
     def edges(self):
         return self.graph.edges
