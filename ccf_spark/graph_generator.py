@@ -15,10 +15,10 @@ class GraphGenerator:
         copy = self.graph.copy()
         self.graph = nx.subgraph_view(
             copy,
-            filter_node=lambda node: nx.degree(copy, node) != 0,
+            filter_node=lambda node: bool(nx.degree(copy, node)),
         )
 
-    def save(self, path):
+    def save(self, path: str):
         with open(path, 'wb') as f:
             nx.write_edgelist(self.graph, f)
 
@@ -26,10 +26,14 @@ class GraphGenerator:
         nx.draw(self.graph, with_labels=True)
 
     @staticmethod
-    def generate_random_graph(nodes, edges):
+    def generate_ccf_random_graph(nodes: int, edges: int):
         graph = GraphGenerator(nodes, edges)
         graph.remove_null_degres_nodes()
         return graph
+
+    @property
+    def number_connected_components(self):
+        return nx.number_connected_components(self.graph)
 
     @property
     def edges(self):
