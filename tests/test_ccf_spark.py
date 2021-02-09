@@ -3,7 +3,7 @@ import networkx as nx
 from pyspark import SparkContext
 from ccf_spark import CcfSpark, GraphGenerator, Ccf
 data_path = os.path.join(os.path.dirname(__file__), 'data')
-sc = SparkContext()
+sc = SparkContext.getOrCreate()
 
 
 def test_ccf_ccf_spar_init():
