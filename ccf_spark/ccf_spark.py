@@ -28,8 +28,9 @@ class CcfSpark:
         else:
             self.graph = sc.parallelize(
                 GraphGenerator.generate_ccf_random_graph(500, 350).edges)
+        self.iterated = False
 
-    def iterate(self, with_distinct: bool = False):
+    def iterate(self, with_distinct: bool = False) -> int:
         accumulator = self.sc.accumulator(0)
         iterator = self.iterator  # To avoid SPARK-5063 error.
         self.graph = self.graph.flatMap(iterator.map).groupByKey()
@@ -45,11 +46,21 @@ class CcfSpark:
             self.graph = self.graph.map(CCF_DEDUP.reduce)
         return accumulator.value
 
-    def iterate_all(self, with_distinct: bool = False):
+    def iterate_all(self, with_distinct: bool = False) -> None:
         while True:
             new_pairs = self.iterate(with_distinct)
             if not new_pairs:
                 break
+        self.iterated = True
 
-    def print(self):
+    def print(self) -> list:
         return self.graph.collect()
+
+    def number_of_connected_components(self) -> int:
+        """
+            Can only be used after iterate_all()
+        """
+        if not self.iterated:
+            self.iterate_all()
+        return self.graph.map(lambda x: (x[1], 1)).reduceByKey(
+            lambda a, b: (a + b)).count()
