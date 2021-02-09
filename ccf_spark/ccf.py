@@ -1,3 +1,4 @@
+from typing import Generator, Iterable, List
 from pyspark.accumulators import Accumulator
 
 LEN_ERROR = ValueError('x len should be equal to 2')
@@ -6,11 +7,13 @@ LEN_ERROR = ValueError('x len should be equal to 2')
 class Ccf:
     class Iterate:
         @staticmethod
-        def _map(key, value):
+        def _map(key: int, value: int) -> tuple:
             return ((key, value), (value, key))
 
         @staticmethod
-        def _reduce(key, values, accumulator: Accumulator = None):
+        def _reduce(key: int,
+                    values: Iterable[int],
+                    accumulator: Accumulator = None) -> Generator:
             value_list = []
             min_value = key
             for value in values:
@@ -26,20 +29,22 @@ class Ccf:
                             accumulator.add(1)
 
         @staticmethod
-        def map(x):
+        def map(x: Iterable) -> tuple:
             if len(x) != 2:
                 raise LEN_ERROR
             return __class__._map(*x)
 
         @staticmethod
-        def reduce(x, accumulator: Accumulator = None):
+        def reduce(x: Iterable, accumulator: Accumulator = None) -> Generator:
             if len(x) != 2:
                 raise LEN_ERROR
             yield from __class__._reduce(*x, accumulator)
 
     class IterateSecondarySorting(Iterate):
         @staticmethod
-        def _reduce(key, values, accumulator: Accumulator = None):
+        def _reduce(key: int,
+                    values: Iterable[int],
+                    accumulator: Accumulator = None) -> Generator:
             min_value = values[0]
             if min_value < key:
                 yield (key, min_value)
@@ -49,28 +54,28 @@ class Ccf:
                         accumulator.add(1)
 
         @staticmethod
-        def reduce(x, accumulator: Accumulator = None):
+        def reduce(x: Iterable, accumulator: Accumulator = None) -> Generator:
             if len(x) != 2:
                 raise LEN_ERROR
             yield from __class__._reduce(*x, accumulator)
 
     class Dedup:
         @staticmethod
-        def _map(key, value):
+        def _map(key: int, value: int) -> tuple:
             return ((key, value), None)
 
         @staticmethod
-        def _reduce(key, value):
+        def _reduce(key: Iterable, value: object) -> tuple:
             return (key[0], key[1])
 
         @staticmethod
-        def map(x):
+        def map(x: Iterable) -> tuple:
             if len(x) != 2:
                 raise LEN_ERROR
             return __class__._map(*x)
 
         @staticmethod
-        def reduce(x):
+        def reduce(x: Iterable) -> tuple:
             if len(x) != 2:
                 raise LEN_ERROR
             return __class__._reduce(*x)
