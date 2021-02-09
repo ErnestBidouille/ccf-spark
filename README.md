@@ -2,6 +2,9 @@
 
 A little CCF implementation in a Spark context with networkx.
 
+[![Build Status](https://travis-ci.com/ErnestBidouille/ccf-spark.svg?branch=main)](https://travis-ci.com/ErnestBidouille/ccf-spark)
+[![codecov](https://codecov.io/gh/ErnestBidouille/ccf-spark/branch/main/graph/badge.svg?token=ZOJUT7BGVF)](https://codecov.io/gh/ErnestBidouille/ccf-spark)
+
 ## Installation 
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install.
