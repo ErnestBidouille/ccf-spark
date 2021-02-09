@@ -1,4 +1,4 @@
-from typing import Generator, Iterable, List
+from typing import Generator, Iterable
 from pyspark.accumulators import Accumulator
 
 LEN_ERROR = ValueError('x len should be equal to 2')

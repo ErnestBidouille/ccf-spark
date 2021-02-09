@@ -21,7 +21,7 @@ class CcfSpark:
         if graph:
             self.graph = sc.parallelize(graph.edges)
         elif file_path:
-            # File line format expected : <int> <int>
+            # File line format expected : <int>%separator%<int>
             self.graph = sc.textFile(file_path).map(
                 lambda x: tuple(map(int,
                                     x.split(separator)[:2])))
