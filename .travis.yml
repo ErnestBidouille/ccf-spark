@@ -18,4 +18,4 @@ install:
   - echo "spark.yarn.jars=$SPARK_HOME/jars/*.jar" > $SPARK_HOME/conf/spark-defaults.conf
   - pip install -r requirements-dev.txt
   - pip install .
-script: pytest
+script: python -m pytest
