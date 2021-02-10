@@ -29,22 +29,23 @@ class CcfSpark:
             self.graph = sc.parallelize(
                 GraphGenerator.generate_ccf_random_graph(500, 350).edges)
         self.iterated = False
+        self._accumulator = self.sc.accumulator(0)
 
     def iterate(self, with_distinct: bool = False) -> int:
-        accumulator = self.sc.accumulator(0)
+        self._accumulator.value = 0
         iterator = self.iterator  # To avoid SPARK-5063 error.
         self.graph = self.graph.flatMap(iterator.map).groupByKey()
         if self.secondary_sorting:
             self.graph = self.graph.map(lambda x: (x[0], sorted(x[1])))
         self.graph = self.graph.flatMap(
-            lambda x, accumulator=accumulator: iterator.reduce(x, accumulator
-                                                               )).sortByKey()
+            lambda x, accumulator=self._accumulator: iterator.reduce(
+                x, accumulator)).sortByKey()
         if with_distinct:
             self.graph = self.graph.distinct()
         else:
             self.graph = self.graph.map(CCF_DEDUP.map).groupByKey()
             self.graph = self.graph.map(CCF_DEDUP.reduce)
-        return accumulator.value
+        return self._accumulator.value
 
     def iterate_all(self, with_distinct: bool = False) -> None:
         while True:
