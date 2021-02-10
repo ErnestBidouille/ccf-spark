@@ -1,4 +1,4 @@
-# CcfSpark version 0.3
+# CcfSpark version 0.3.1
 
 A little CCF implementation in a Spark context with networkx.
 
@@ -31,6 +31,7 @@ Or see example.py
 ## Authors
 - Théo Chennebault
 - Louis Ledeoux
+- Théophile Dano
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
