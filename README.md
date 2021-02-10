@@ -30,7 +30,7 @@ Or see example.py
 
 ## Authors
 - Théo Chennebault
-- Louis Ledeoux
+- Louis Ledoux
 - Théophile Dano
 
 ## Contributing
